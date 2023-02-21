@@ -10,6 +10,9 @@ namespace SWIMAPP
         static List<string> teamB = new List<string>();
         static List<string> teamReserves = new List<string>();
 
+        static float fastestTime = 9999f;
+        static string topSwimmer;
+
         static void Oneswimmer()
         {
             Console.WriteLine("enter the swimmers name");
@@ -33,14 +36,23 @@ namespace SWIMAPP
 
                 totalTime = (mintes * 60) + secends;
 
-                Console.WriteLine($"swimmer Time{ i + 1}:{mintes} min {secends} secends\n total time in seconds:{totalTime}s");
+                Console.WriteLine($"swimmer Time{ i + 1}:{mintes} min {secends} secends\t\t total time in seconds:{totalTime}s");
 
                 sumTotalTime = sumTotalTime + totalTime;
             }
 
             float avgTime = (float)sumTotalTime / 4;
 
+            if (avgTime < fastestTime)
+            {
+                fastestTime = avgTime;
+                topSwimmer = swimerName;
+            }
+
             //assigan swimmer to a team
+
+            string alloctaedTeam = "reserver";
+
             if (avgTime <= 160)
             {
                 teamA.Add(swimerName);
@@ -56,12 +68,26 @@ namespace SWIMAPP
 
             Console.WriteLine($"avg time: {avgTime}");
 
+            Console.WriteLine($"TEAM: {alloctaedTeam}");
+
         }
 
 
         static void Main(string[] args)
         {
-            Oneswimmer();
+            string flag = "";
+            while (!flag.Equals("Stop"))
+            {
+                Oneswimmer();
+
+                Console.WriteLine("press enter to add another swimmer or type 'Stop' to end");
+
+                flag = Console.ReadLine();
+
+            }
+
+            Console.WriteLine($"fastest swimmer was {topSwimmer} with an averge time of {fastestTime} seconds");
+
         }
     }
 }
