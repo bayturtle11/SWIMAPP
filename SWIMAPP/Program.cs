@@ -5,119 +5,114 @@ namespace SWIMAPP
 {
     class Program
     {
-        //gobal verible
+        //global variables
         static List<string> teamA = new List<string>();
         static List<string> teamB = new List<string>();
         static List<string> teamReserves = new List<string>();
-
         static float fastestTime = 9999f;
-        static string topSwimmer;
-
-        static void Oneswimmer()
+        static string topSwimmer = "";
+        static void OneSwimmer()
         {
-            Console.WriteLine("enter the swimmers name");
 
-            string swimerName = Console.ReadLine();
-
-            Console.WriteLine($"Swimmer name: {swimerName}");
-
+            string swimmerName = CheckName();
+            Console.WriteLine($"Swimmer name: {swimmerName}");
             int sumTotalTime = 0;
 
-            //loop four times
+            // Loop 4 times
             for (int i = 0; i < 4; i++)
             {
-
-                int mintes, secends, totalTime = 0;
-
-                //generat a random number between 1 and 4 (incl)
-                Random randNumber = new Random();
-                mintes = randNumber.Next(1, 4);
-                secends = randNumber.Next(0, 59);
-
-                totalTime = (mintes * 60) + secends;
-
-                Console.WriteLine($"swimmer Time{ i + 1}:{mintes} min {secends} secends\t\t total time in seconds:{totalTime}s");
-
+                int minutes, seconds, totalTime = 0;
+                //Generate a random number between 1 and 4 (incl)
+                Random randomNumber = new Random();
+                minutes = randomNumber.Next(1, 4);
+                seconds = randomNumber.Next(0, 59);
+                totalTime = (minutes * 60) + seconds;
+                Console.WriteLine($"Swimmer Time {i + 1}: {minutes}  min {seconds}  seconds\t\tTotal time in seconds: {totalTime}s");
                 sumTotalTime = sumTotalTime + totalTime;
+
             }
-
             float avgTime = (float)sumTotalTime / 4;
-
             if (avgTime < fastestTime)
             {
                 fastestTime = avgTime;
-                topSwimmer = swimerName;
+                topSwimmer = swimmerName;
             }
-
-            //assigan swimmer to a team
-
-            string alloctaedTeam = "reserver";
-
+            string allocatedTeam = "Reserve";
+            //assign the swimmer to a team
             if (avgTime <= 160)
             {
-                teamA.Add(swimerName);
+                teamA.Add(swimmerName);
+                allocatedTeam = "A";
             }
             else if (avgTime <= 210)
             {
-                teamB.Add(swimerName);
+                teamB.Add(swimmerName);
+                allocatedTeam = "B";
             }
             else
             {
-                teamReserves.Add(swimerName);
+                teamReserves.Add(swimmerName);
             }
+            Console.WriteLine($"Avg time: {avgTime}");
+            Console.WriteLine($"Team: {allocatedTeam}");
 
-            Console.WriteLine($"avg time: {avgTime}");
-
-            Console.WriteLine($"TEAM: {alloctaedTeam}");
 
         }
-
-
-        //returns team list
-        static string CrateTeamList()
+        //returns a string containing the team lists
+        static string CreateTeamLists()
         {
-            string teamLists = "thw teams are:\n\n Team A\n";
-
+            string teamLists = "\nThe teams are:\n\nTeam A\n";
+            //add team A to team list
             foreach (string swimmer in teamA)
             {
                 teamLists += swimmer + "\t";
             }
-
-            teamLists += $"\n\n {teamA.Count} Team members  (s)\n\n Team B\n ";
-
-            foreach (string swimmer in teamA)
+            teamLists += $"\nwith {teamA.Count} team member(s)\n\nTeam B\n";
+            //add team B to team list
+            foreach (string swimmer in teamB)
             {
                 teamLists += swimmer + "\t";
             }
-
-            teamLists += $"\n\n {teamB.Count} Team members (s)\n\n Team Reserves";
-
+            teamLists += $"\nwith {teamB.Count} team member(s)\n\nTeam Reserves\n";
+            //add team Reserves to team list
             foreach (string swimmer in teamReserves)
             {
                 teamLists += swimmer + "\t";
             }
-
+            teamLists += $"\nwith {teamReserves.Count} team member(s)\n\n";
             return teamLists;
-
         }
+        static string CheckName()
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter the swimmer's name:\n");
+                string name = Console.ReadLine();
 
-static void Main(string[] args)
+            
+
+            if (!name.Equals(""))
+            {
+                name = name[0].ToString().ToUpper() + name.Substring(1);
+                return name;
+            }
+
+            Console.WriteLine("ERROR: you must enter a name for the swimmer");
+
+            }
+        }
+        static void Main(string[] args)
         {
             string flag = "";
             while (!flag.Equals("Stop"))
             {
-                Oneswimmer();
-
-                Console.WriteLine("press enter to add another swimmer or type 'Stop' to end");
-
+                OneSwimmer();
+                Console.WriteLine("Press <Enter> to add another swimmer or type 'Stop' to end");
                 flag = Console.ReadLine();
-
             }
-
-            Console.WriteLine($"fastest swimmer was {topSwimmer} with an averge time of {fastestTime} seconds");
-
-            Console.WriteLine(CrateTeamList());
-
+            Console.WriteLine($"The fastest swimmer was {topSwimmer} with an average time of {fastestTime} seconds");
+            Console.WriteLine(CreateTeamLists());
         }
-    }
+
+    }  
 }
