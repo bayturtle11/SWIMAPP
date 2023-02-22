@@ -73,7 +73,35 @@ namespace SWIMAPP
         }
 
 
-        static void Main(string[] args)
+        //returns team list
+        static string CrateTeamList()
+        {
+            string teamLists = "thw teams are:\n\n Team A\n";
+
+            foreach (string swimmer in teamA)
+            {
+                teamLists += swimmer + "\t";
+            }
+
+            teamLists += $"\n\n {teamA.Count} Team members  (s)\n\n Team B\n ";
+
+            foreach (string swimmer in teamA)
+            {
+                teamLists += swimmer + "\t";
+            }
+
+            teamLists += $"\n\n {teamB.Count} Team members (s)\n\n Team Reserves";
+
+            foreach (string swimmer in teamReserves)
+            {
+                teamLists += swimmer + "\t";
+            }
+
+            return teamLists;
+
+        }
+
+static void Main(string[] args)
         {
             string flag = "";
             while (!flag.Equals("Stop"))
@@ -87,6 +115,8 @@ namespace SWIMAPP
             }
 
             Console.WriteLine($"fastest swimmer was {topSwimmer} with an averge time of {fastestTime} seconds");
+
+            Console.WriteLine(CrateTeamList());
 
         }
     }
